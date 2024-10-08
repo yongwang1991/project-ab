@@ -6,7 +6,7 @@ Govtech AI Champions Bootcamp
 
 In the terminal or command prompt:
 
-# cloning project
+### cloning project
 
 1. git clone https://github.com/dchyii/project-abc.git
 2. cd project-abc
@@ -15,7 +15,7 @@ In the terminal or command prompt:
 5. pip install -r requirements.txt
 6. code .
 
-# setup password and env variables
+### setup password and env variables
 
 7. rename secrets.example.toml to secrets.toml
 8. update the password in secrets.toml
