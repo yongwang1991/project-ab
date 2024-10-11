@@ -17,7 +17,7 @@ In the terminal or command prompt:
 
 ### setup password and env variables
 
-7. rename secrets.example.toml to secrets.toml
+7. duplicate the secrets.example.toml file and name as secrets.toml
 8. update the password in secrets.toml
-9. rename .env.example to .env
+9. duplicate the .env.example file and rename as .env
 10. update the OpenAI API key in .env
