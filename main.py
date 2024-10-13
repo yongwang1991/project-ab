@@ -27,7 +27,10 @@ col1, col2 = st.columns(2)
 
 # Initialize chat history
 if "messages" not in st.session_state:
-    st.session_state.messages = []
+    st.session_state.messages = [
+        {"role": "system", "content": "You are a public sector procurement officer in the Singapore public service. You are helping to draft the requirements specifications for a tender."},
+        {"role": "assistant", "content": "Hi. What would you like to procure today?"}
+    ]
 
 with col1:
     st.container(height=500)
@@ -44,9 +47,9 @@ with col2:
         # Display user message in chat message container
         chatcontainer.chat_message("user").markdown(prompt)
         # Add user message to chat history
-        st.session_state.messages.append({"role": "user", "content": prompt})
+        st.session_state.messages.append({"role": "user", "content": f"{prompt}" })
 
-        response = f"Echo: {prompt}"
+        response = llm.get_completion_by_messages(st.session_state.messages)
         # Display assistant response in chat message container
         with chatcontainer.chat_message("assistant"):
             st.markdown(response)
