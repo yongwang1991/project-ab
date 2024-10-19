@@ -25,15 +25,17 @@ if not check_password():
 
 col1, col2 = st.columns(2)
 
-# Initialize chat history
-if "messages" not in st.session_state:
-    st.session_state.messages = [
+# Initialize assistant
+if "background" "message" "stage" not in st.session_state:
+    st.session_state.background = [
         {"role": "system", "content": "You are a public sector procurement officer in the Singapore public service. You are helping to draft the requirements specifications for a tender."},
+        {"role": "user", "content" : ""}
+    ]
+    st.session_state.stage = {"current": 0, "max": 0}
+    st.session_state.messages = [
         {"role": "assistant", "content": "Hi. What would you like to procure today?"}
     ]
 
-with col1:
-    st.container(height=500)
 
 with col2:
     chatcontainer = st.container(height=500)
@@ -48,10 +50,29 @@ with col2:
         chatcontainer.chat_message("user").markdown(prompt)
         # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": f"{prompt}" })
+        st.session_state.background[1]["content"] = prompt
 
-        response = llm.get_completion_by_messages(st.session_state.messages)
-        # Display assistant response in chat message container
-        with chatcontainer.chat_message("assistant"):
-            st.markdown(response)
-        # Add assistant response to chat history
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        # response = llm.get_completion_by_messages(st.session_state.messages)
+        # # Display assistant response in chat message container
+        # with chatcontainer.chat_message("assistant"):
+        #     st.markdown(response)
+        # # Add assistant response to chat history
+        # st.session_state.messages.append({"role": "assistant", "content": response})
+
+        if st.session_state.stage["current"] == 0:
+            system_instructions = [{"role": "system", "content": """
+            You are to reply with the key cost components of the user's requirement in an array. For example, for a dinner and dance event, the key cost components are ["venue", "food", "emcee", "photo booth"]. 
+            """}]
+            built_prompt = st.session_state.messages
+            built_prompt.insert(0,st.session_state.background[0]) 
+            built_prompt.extend(system_instructions)
+            # print(built_prompt)
+            response = llm.get_completion_by_messages(built_prompt)
+            with chatcontainer.chat_message("assistant"):
+                st.markdown(response)
+            st.session_state.messages.append({"role": "assistant", "content": response})
+
+with col1:
+    with st.container(height=500):
+        st.session_state
+
