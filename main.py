@@ -46,28 +46,27 @@ with col2:
 
     # React to user input
     if prompt := st.chat_input("What is up?"):
-        # Display user message in chat message container
-        chatcontainer.chat_message("user").markdown(prompt)
-        # Add user message to chat history
-        st.session_state.messages.append({"role": "user", "content": f"{prompt}" })
-        st.session_state.background[1]["content"] = prompt
-
-        # response = llm.get_completion_by_messages(st.session_state.messages)
-        # # Display assistant response in chat message container
-        # with chatcontainer.chat_message("assistant"):
-        #     st.markdown(response)
-        # # Add assistant response to chat history
-        # st.session_state.messages.append({"role": "assistant", "content": response})
-
         if st.session_state.stage["current"] == 0:
+            # Display user message in chat message container
+            chatcontainer.chat_message("user").markdown(prompt)
+            # Add user message to chat history
+            st.session_state.messages.append({"role": "user", "content": f"{prompt}" })
+            st.session_state.background[1]["content"] = prompt
+
+            # response = llm.get_completion_by_messages(st.session_state.messages)
+            # # Display assistant response in chat message container
+            # with chatcontainer.chat_message("assistant"):
+            #     st.markdown(response)
+            # # Add assistant response to chat history
+            # st.session_state.messages.append({"role": "assistant", "content": response})
+
             system_instructions = [{"role": "system", "content": """
             You are to reply with the key cost components of the user's requirement in an array. For example, for a dinner and dance event, the key cost components are ["venue", "food", "emcee", "photo booth"]. 
             """}]
-            built_prompt = st.session_state.messages
-            built_prompt.insert(0,st.session_state.background[0]) 
-            built_prompt.extend(system_instructions)
-            # print(built_prompt)
+            built_prompt = [st.session_state.background[0]] + st.session_state.messages + system_instructions
+            print("built prompt: ", built_prompt)
             response = llm.get_completion_by_messages(built_prompt)
+            print("response: ", response)
             with chatcontainer.chat_message("assistant"):
                 st.markdown(response)
             st.session_state.messages.append({"role": "assistant", "content": response})
