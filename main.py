@@ -35,7 +35,7 @@ if "background" not in st.session_state:
     ]
 
 if "stage" not in st.session_state:
-    st.session_state.stage = {"max": 0, "current": 0, "status": "setup"}
+    st.session_state.stage = {"max": 0, "current": 0, "status": "setup", "chat_disabled" : False}
 
 if "current_draft" not in st.session_state:
     st.session_state.current_draft = ""
@@ -58,7 +58,7 @@ with col2:
             st.markdown(message["content"])
 
     # React to user input
-    if prompt := st.chat_input("What is up?"):
+    if prompt := st.chat_input("What is up?", disabled={st.session_state.stage["chat_disabled"]}):
         if st.session_state.stage["current"] <= st.session_state.stage["max"]:
             # Display user message in chat message container
             chatcontainer.chat_message("user").markdown(prompt)
@@ -209,6 +209,7 @@ with col2:
             with chatcontainer.chat_message("assistant"):
                 st.markdown(response)
             st.session_state.messages.append({"role": "assistant", "content": response})
+            st.session_state.stage["chat_disabled"] = True
 
 
 
