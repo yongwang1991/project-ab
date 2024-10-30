@@ -33,7 +33,6 @@ if "messages" not in st.session_state:
         {"role": "assistant", "content": "Hi. What would you like to procure today?"}
     ]
 
-
 with col2:
     st.markdown("## Agent")
     chatcontainer = st.container(height=500)
@@ -43,7 +42,7 @@ with col2:
             st.markdown(message["content"])
 
     # React to user input
-    if prompt := st.chat_input("What is up?", disabled={st.session_state.stage["chat_disabled"]}):
+    if prompt := st.chat_input("What is up?", disabled=st.session_state.stage["chat_disabled"]):
         if st.session_state.stage["current"] <= st.session_state.stage["max"]:
             # Display user message in chat message container
             chatcontainer.chat_message("user").markdown(prompt)
@@ -186,6 +185,7 @@ with col2:
 
         else:
             # print("end")
+            st.session_state.stage["chat_disabled"] = True
             st.session_state.stage["status"] = "completed"
             system_instructions = [{"role": "system", "content": system_prompts.system_prompts["completed"]}]
             built_prompt = st.session_state.messages + system_instructions
@@ -194,7 +194,6 @@ with col2:
             with chatcontainer.chat_message("assistant"):
                 st.markdown(response)
             st.session_state.messages.append({"role": "assistant", "content": response})
-            st.session_state.stage["chat_disabled"] = True
 
 with col1:
     st.markdown("## Current Draft")
