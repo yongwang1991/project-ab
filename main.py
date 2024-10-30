@@ -10,21 +10,6 @@ st.title("Specs Agent")
 if not check_password():  
     st.stop()
 
-# st.write("hello world!")
-
-## template prompt code ##
-# form = st.form(key="form")
-# form.subheader("Prompt")
-
-# user_prompt = form.text_area("Enter your prompt here", height=200)
-
-# if form.form_submit_button("Submit"):
-#     st.toast(f"User Input Submitted - {user_prompt}")
-#     response = llm.get_completion(user_prompt) 
-#     st.write(response) 
-#     print(f"User Input is {user_prompt}")
-## template prompt code ##
-
 col1, col2 = st.columns([2,1])
 
 # Initialize assistant
@@ -210,9 +195,6 @@ with col2:
                 st.markdown(response)
             st.session_state.messages.append({"role": "assistant", "content": response})
             st.session_state.stage["chat_disabled"] = True
-
-
-
 
 with col1:
     st.markdown("## Current Draft")
