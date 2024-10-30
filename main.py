@@ -207,7 +207,7 @@ with col2:
             response = llm.get_completion_by_messages(built_prompt)
 
             with chatcontainer.chat_message("assistant"):
-                st.markdown(response["reply"])
+                st.markdown(response)
             st.session_state.messages.append({"role": "assistant", "content": response})
 
 
