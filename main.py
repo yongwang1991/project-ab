@@ -10,11 +10,9 @@ st.title("Specs Agent")
 if not check_password():  
     st.stop()
 
-tab1, tab2 = st.tabs(["# Draft", "# Finalised"])
+tab1, tab2 = st.tabs([":pencil2: **Draft**", ":white_check_mark: Finalised"])
 
 with tab1:
-    col1, col2 = st.columns([2,1])
-
     # Initialize assistant
     if "background" not in st.session_state:
         st.session_state.background = [
@@ -36,9 +34,21 @@ with tab1:
             {"role": "assistant", "content": "Hi. What would you like to procure today?"}
         ]
 
+    with st.container(height=75):
+        progress_status = {
+            "setup" : 0,
+            "setup_confirmation" : 0,
+            "completed": 100,
+            "draft": st.session_state.stage["current"] / (st.session_state.stage["max"] + 1),
+            "confirmation": st.session_state.stage["current"] / (st.session_state.stage["max"] + 1)
+        }
+        st.progress(progress_status[st.session_state.stage["status"]], "## :hourglass: Your Progress: :hourglass:")
+
+    col1, col2 = st.columns([2,1])
+
     with col2:
-        st.markdown("## Agent")
-        chatcontainer = st.container(height=500)
+        st.markdown("##### Agent")
+        chatcontainer = st.container(height=400)
         # Display chat messages from history on app rerun
         for message in st.session_state.messages:
             with chatcontainer.chat_message(message["role"]):
@@ -205,29 +215,16 @@ with tab1:
                 st.session_state.messages.append({"role": "assistant", "content": response})
 
     with col1:
-        st.markdown("## Current Draft")
-        with st.container(height=500):
+        st.markdown("##### Current Draft")
+        with st.container(height=450):
             st.markdown(st.session_state.current_draft)        
 
     # with st.container(height=500):
     #     st.session_state
 
-    with st.container(height=75):
-        progress_status = {
-            "setup" : 0,
-            "setup_confirmation" : 0,
-            "completed": 100,
-            "draft": st.session_state.stage["current"] / (st.session_state.stage["max"] + 1),
-            "confirmation": st.session_state.stage["current"] / (st.session_state.stage["max"] + 1)
-        }
-        st.progress(progress_status[st.session_state.stage["status"]], "## :hourglass: Your Progress: :hourglass:")
-
 with tab2: 
-    with st.container(height=700):
-        st.markdown("""
-                    # Requirements Specification 
-                    ---
-                    """)
+    st.markdown("### Requirements Specification ")
+    with st.container(height=500):
         for section in st.session_state.sow:
             st.markdown(section)
         
