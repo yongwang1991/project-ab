@@ -9,7 +9,7 @@ system_prompts = {
     "results" : data to be provided,
     "next_step" : keyword for next step
     }
-    You are to generate an array of the key components of the user's requirement in the key "results". For example, for a dinner and dance event, the examples of the key components are ["venue", "food", "emcee", "photo booth"].  Based on the array, generate your response in proper sentence form, invite the user to suggest additions or amendments, and check if the user is agreeable your suggestions in the key "reply". The value to the key "next_step" shall be the word "setup_confirmation". 
+    You are to generate an array of the key components of the user's requirement in the key "results". For example, for a dinner and dance event, the examples of the key components are ["venue", "food", "emcee", "photo booth"].  Based on the array, generate your response in proper sentence form (not in array format), invite the user to suggest additions or amendments, and check if the user is agreeable your suggestions in the key "reply". The value to the key "next_step" shall be the word "setup_confirmation". 
 """,
 "setup_amendment" : """
     Your response shall be in json format as follows: 

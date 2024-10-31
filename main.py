@@ -72,8 +72,8 @@ with col2:
             elif st.session_state.stage["status"] == "setup_confirmation":
                 ## print("setup confirmation")
                 user_prompt = [{"role" : "user", "content" : prompt}]
-                system_instructions = [{"role": "system", "content": system_prompts.system_prompts["confirmation"]}]
-                prompt_for_decision = st.session_state.messages + user_prompt + system_instructions
+                system_instructions = [{"role": "system", "content": system_prompts.system_prompts["confirmation"]}, {"role" : "assistant" , "content": st.session_state["background"][1]["content"]}]
+                prompt_for_decision = system_instructions + user_prompt
                 decision_json = llm.get_completion_by_messages(prompt_for_decision)
                 decision = json.loads(decision_json)
                 proceed_decision = decision["proceed"] #retrieve proceed decision
@@ -136,8 +136,8 @@ with col2:
             elif st.session_state.stage["status"] == "confirmation":
                 ## print("setup confirmation")
                 user_prompt = [{"role" : "user", "content" : prompt}]
-                system_instructions = [{"role": "system", "content": system_prompts.system_prompts["confirmation"]}]
-                prompt_for_decision = st.session_state.messages + user_prompt + system_instructions
+                system_instructions = [{"role": "system", "content": system_prompts.system_prompts["confirmation"]},{"role" : "assistant", "content" : st.session_state["current_draft"]}]
+                prompt_for_decision = system_instructions + user_prompt
                 decision_json = llm.get_completion_by_messages(prompt_for_decision)
                 decision = json.loads(decision_json)
                 proceed_decision = decision["proceed"] #retrieve proceed decision
@@ -200,8 +200,8 @@ with col1:
     with st.container(height=500):
         st.markdown(st.session_state.current_draft)        
 
-# with st.container(height=500):
-#     st.session_state
+with st.container(height=500):
+    st.session_state
 
 with st.container(height=700):
     st.markdown("""
