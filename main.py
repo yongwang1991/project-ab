@@ -43,11 +43,12 @@ with col2:
 
     # React to user input
     if prompt := st.chat_input("What is up?", disabled=st.session_state.stage["chat_disabled"]):
+        # Display user message in chat message container
+        chatcontainer.chat_message("user").markdown(prompt)
+        # Add user message to chat history
+        st.session_state.messages.append({"role": "user", "content": f"{prompt}" })
+
         if st.session_state.stage["current"] <= st.session_state.stage["max"]:
-            # Display user message in chat message container
-            chatcontainer.chat_message("user").markdown(prompt)
-            # Add user message to chat history
-            st.session_state.messages.append({"role": "user", "content": f"{prompt}" })
 
             ##! first engagement with llm to set up the main headers of the scope of work !##
             if st.session_state.stage["status"] == "setup":
@@ -206,6 +207,16 @@ with col1:
 
 with st.container(height=500):
     st.session_state
+
+with st.container(height=75):
+    progress_status = {
+        "setup" : 0,
+        "setup_confirmation" : 0,
+        "completed": 100,
+        "draft": st.session_state.stage["current"] / st.session_state.stage["max"],
+        "confirmation": st.session_state.stage["current"] / st.session_state.stage["max"]
+    }
+    st.progress(progress_status[st.session_state.stage["status"]], "## :hourglass: Your Progress: :hourglass:")
 
 with st.container(height=700):
     st.markdown("""
