@@ -153,12 +153,17 @@ with col2:
                         st.markdown(response["reply"])
                     st.session_state.messages.append({"role": "assistant", "content": response["reply"]})
 
+                    # Update SOW with the confirmed draft
+                    st.session_state.sow.append(st.session_state.current_draft)
+
                     # Update stage and status
                     st.session_state.stage["status"] = "draft"
                     st.session_state.stage["current"] += 1
 
-                    # Update SOW with the confirmed draft
-                    st.session_state.sow.append(st.session_state.current_draft)
+                    # Disable chat if the job is completed
+                    if st.session_state.stage["current"] > st.session_state.stage["max"]:
+                        st.session_state.stage["chat_disabled"] = True
+
 
                 #* if user is NOT agreeable with the current draft of the section *#
                 else:
@@ -185,7 +190,6 @@ with col2:
 
         else:
             # print("end")
-            st.session_state.stage["chat_disabled"] = True
             st.session_state.stage["status"] = "completed"
             system_instructions = [{"role": "system", "content": system_prompts.system_prompts["completed"]}]
             built_prompt = st.session_state.messages + system_instructions

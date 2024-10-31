@@ -55,7 +55,7 @@ system_prompts = {
     In the "reply" key, respond in a positive tone and inform the user that we shall move onto the next step. 
 """,
 "completed": """
-    You have completed your job of helping the user draft the requirements specifications. Let the user know that we have completed the drafting and that you are happy to be able to help. Inform him that the draft is based on whatever training data you have and is not specifically trained for his purpose. Hence, remind him that it is his duty to double chcek the requirements to ensure that it meet his intent. 
+    You have completed your job of helping the user draft the requirements specifications. Let the user know that we have completed the drafting and that you are happy to be able to help. Inform him that the draft is based on whatever training data you have and is not specifically trained for his purpose. Hence, remind him that it is his duty to double chcek the requirements to ensure that it meet his intent. Do not offer to help answer any more questions.
 """,
 "error":"""
     There seems to be an error. Please copy out any sections that you would like to retain, and start over again.
