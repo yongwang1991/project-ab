@@ -143,7 +143,7 @@ with col2:
                 proceed_decision = decision["proceed"] #retrieve proceed decision
                 ## print("proceed_decision =", proceed_decision)
 
-                #* if user is agreeable with the main headers *#
+                #* if user is agreeable with the current draft of the section *#
                 if proceed_decision == "True":
                     response_json = llm.get_completion_by_messages([{"role" : "system", "content" : system_prompts.system_prompts["proceed"]}])
                     response = json.loads(response_json)
@@ -160,7 +160,7 @@ with col2:
                     # Update SOW with the confirmed draft
                     st.session_state.sow.append(st.session_state.current_draft)
 
-                #* if user is NOT agreeable with the main headers *#
+                #* if user is NOT agreeable with the current draft of the section *#
                 else:
                     section_list = json.loads(st.session_state.background[1]["content"])
                     current_section = section_list[st.session_state.stage["current"] - 1]
