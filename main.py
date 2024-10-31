@@ -156,6 +156,7 @@ with col2:
 
                     # Update SOW with the confirmed draft
                     st.session_state.sow.append(st.session_state.current_draft)
+                    st.session_state.current_draft = ""
 
                     # Update stage and status
                     st.session_state.stage["status"] = "draft"
@@ -213,8 +214,8 @@ with st.container(height=75):
         "setup" : 0,
         "setup_confirmation" : 0,
         "completed": 100,
-        "draft": st.session_state.stage["current"] / st.session_state.stage["max"],
-        "confirmation": st.session_state.stage["current"] / st.session_state.stage["max"]
+        "draft": st.session_state.stage["current"] / (st.session_state.stage["max"] + 1),
+        "confirmation": st.session_state.stage["current"] / (st.session_state.stage["max"] + 1)
     }
     st.progress(progress_status[st.session_state.stage["status"]], "## :hourglass: Your Progress: :hourglass:")
 
