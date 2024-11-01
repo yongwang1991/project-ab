@@ -25,4 +25,4 @@ with st.expander("Implementation Details"):
 
 
 with st.expander("Flowchart"):
-    st.image("app/Detailed Process Workflow.png")
+    st.image("main/DetailedProcessWorkflow.png")
