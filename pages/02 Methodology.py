@@ -25,4 +25,6 @@ with st.expander("Implementation Details"):
 
 
 with st.expander("Flowchart"):
-    st.image("main/DetailedProcessWorkflow.png")
+    st.markdown('<img src="./app/static/DetailedProcessWorkflow.PNG">',
+    unsafe_allow_html=True,)
+    # st.image("main/DetailedProcessWorkflow.png")
